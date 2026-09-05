@@ -38,16 +38,32 @@ Then visit `http://localhost:8000` in your web browser.
 
 ---
 
-## 📁 Key Repository Files
+## 📁 Key Repository Structure
 
-| File | Purpose |
-| --- | --- |
-| `index.html` | Core single-page interface layout containing the Dashboard, Transaction Simulator, Authorization Grants Manager, Dataset Explorer, and Flow Architecture tabs. |
-| `app.js` | Main application logic including risk calculation engines (Standard Rules vs. Smart AI Engine), CSV parser, transaction simulator, grant management, and dynamic charts. |
-| `styles.css` | Complete custom CSS design system featuring dark theme, vibrant glassmorphism, responsive Bento grid layouts, and micro-animations. |
-| `benchmark_dataset.csv` | Benchmark dataset containing 2,000 evaluated transactions across safe payments, policy violations, prompt injection attacks, and borderline cases. |
-| `dataset_data.js` | JS string wrapper for `benchmark_dataset.csv` providing instant fallback rendering without CORS restrictions. |
-| `BenchmarkRunner.java` / `RiskScorer.java` | Original Java benchmark simulation utilities for dataset scoring and model evaluation. |
+```
+agentic-payment-firewall/
+├── index.html                 # Core single-page application layout
+├── README.md                  # Project overview & deployment documentation
+├── vercel.json                # Vercel deployment configuration
+├── css/
+│   └── styles.css             # Main stylesheet & design system
+├── js/
+│   └── app.js                 # Dashboard logic, simulator & risk engines
+├── data/
+│   ├── benchmark_dataset.csv  # 2,000 transaction test dataset
+│   ├── dataset_data.js        # Embedded fallback JS dataset
+│   └── benchmark_metrics.json # Benchmark evaluation output metrics
+├── docs/
+│   └── implementation_plan.md # Architecture & design specification
+└── java_engine/               # Java Benchmark Generation & Evaluation Engine
+    ├── pom.xml
+    ├── BenchmarkRunner.java
+    ├── DatasetGenerator.java
+    ├── Evaluator.java
+    ├── RiskScorer.java
+    ├── Rupees.java
+    └── Transaction.java
+```
 
 ---
 

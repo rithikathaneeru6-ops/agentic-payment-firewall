@@ -769,7 +769,7 @@ function loadData() {
     }
 
     // Fallback: fetch CSV file directly
-    fetch("benchmark_dataset.csv")
+    fetch("data/benchmark_dataset.csv")
         .then(r => {
             if (!r.ok) throw new Error("HTTP error " + r.status);
             return r.text();

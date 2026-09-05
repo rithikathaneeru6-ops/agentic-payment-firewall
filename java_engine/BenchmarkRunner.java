@@ -30,12 +30,12 @@ public class BenchmarkRunner {
         List<String[]> rows = new ArrayList<>();
         Evaluator.Metrics metrics = evaluator.evaluate(dataset, rows);
 
-        writeCsv("benchmark_dataset.csv", dataset, rows);
-        writeText("benchmark_metrics.json", metrics.toJson());
+        writeCsv("../data/benchmark_dataset.csv", dataset, rows);
+        writeText("../data/benchmark_metrics.json", metrics.toJson());
 
         System.out.println(metrics.toReport());
         System.out.println();
-        System.out.println("Wrote benchmark_dataset.csv and benchmark_metrics.json");
+        System.out.println("Wrote ../data/benchmark_dataset.csv and ../data/benchmark_metrics.json");
     }
 
     private static void writeCsv(String path, List<Transaction> dataset, List<String[]> rows) throws IOException {
