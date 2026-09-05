@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Payment Firewall Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="apf-app">
+        <!-- Sidebar Navigation -->
+        <aside class="apf-sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                    <div class="logo-icon">
+                        <svg class="razorpay-logo-svg" viewBox="0 0 100 100" width="30" height="30">
+                            <path d="M 25 10 L 80 10 L 45 50 L 82 50 L 18 90 L 40 50 L 15 50 Z"
+                                fill="url(#rzpGradient)" />
+                            <defs>
+                                <linearGradient id="rzpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ff007f" />
+                                    <stop offset="50%" stop-color="#ff4b91" />
+                                    <stop offset="100%" stop-color="#ffb703" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <span class="brand-name">Razorpay <span class="accent">APF</span></span>
+                </div>
+                <div class="badge-beta">Razorpay APF</div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <button class="menu-item active" data-tab="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard & Metrics</span>
+                </button>
+                <button class="menu-item" data-tab="playground">
+                    <i data-lucide="play-circle"></i>
+                    <span>Transaction Simulator</span>
+                </button>
+                <button class="menu-item" data-tab="grants">
+                    <i data-lucide="shield-check"></i>
+                    <span>Authorization Grants</span>
+                </button>
+                <button class="menu-item" data-tab="dataset">
+                    <i data-lucide="database"></i>
+                    <span>Dataset Explorer</span>
+                </button>
+                <button class="menu-item" data-tab="architecture">
+                    <i data-lucide="git-branch"></i>
+                    <span>Flow Architecture</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-status-card">
+                    <div class="pulse-indicator online"></div>
+                    <div class="user-info">
+                        <span class="user-role">APF Security Engine</span>
+                        <span class="user-connection">Active & Guarding</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="apf-main-content">
+            <!-- Top Bar -->
+            <header class="apf-topbar">
+                <button class="btn-mobile-nav" id="btn-mobile-nav" title="Toggle Navigation Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="topbar-search">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="global-search" placeholder="Search transactions, purposes, merchants...">
+                </div>
+
+                <div class="badge-student-tag">
+                    <span>⚡ Razorpay Agentic Payment Firewall</span>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="apf-mode-selector">
+                        <span class="selector-label">Security Engine:</span>
+                        <div class="toggle-switch-container">
+                            <button id="btn-engine-baseline" class="toggle-btn active">Standard Rules</button>
+                            <button id="btn-engine-ai" class="toggle-btn">Smart AI Engine</button>
+                        </div>
+                    </div>
+                    <button class="btn-refresh" id="btn-global-refresh" title="Reload System Data">
+                        <i data-lucide="rotate-cw"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB CONTENT: DASHBOARD -->
+            <section id="tab-dashboard" class="tab-pane active">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Agentic Payment Firewall Dashboard</h1>
+                        <p class="page-subtitle">Monitoring and protecting autonomous AI spending agents from
+                            unauthorized purchases and prompt attacks.</p>
+                    </div>
+                </div>
+
+                <!-- One-Line Pitch Banner -->
+                <div class="pitch-banner">
+                    <div class="pitch-content">
+                        <i data-lucide="shield-check" class="pitch-icon"></i>
+                        <span><strong>Razorpay APF:</strong> Real-time firewall that blocks AI shopping/booking agents from being tricked into unauthorized purchases via prompt injection.</span>
+                    </div>
+                </div>
+
+                <!-- Bento Metrics GRID -->
+                <div class="bento-grid">
+                    <!-- Prevented Loss Card -->
+                    <div class="bento-card card-double main-gradient-card">
+                        <div class="card-icon-wrapper">
+                            <i data-lucide="shield-alert"></i>
+                        </div>
+                        <div class="metric-block">
+                            <span class="metric-label">Prevented Loss</span>
+                            <div class="metric-value-container">
+                                <span class="metric-value" id="metric-prevented-loss">₹48,193</span>
+                                <span class="paise" id="metric-prevented-loss-paise">.43</span>
+                            </div>
+                            <p class="metric-desc">Total financial value saved by blocking unsafe AI purchases.</p>
+                        </div>
+                        <div class="card-chart-bg">
+                            <canvas id="miniChartLoss"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Threat Detection Rate Card -->
+                    <div class="bento-card">
+                        <div class="card-header-simple">
+                            <span class="metric-label">Threat Detection Rate</span>
+                            <span class="badge-status success" id="val-recall-badge">95.17%</span>
+                        </div>
+                        <div class="metric-large-text" id="metric-recall">95.17%</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-fill" id="fill-recall" style="width: 95.17%;"></div>
+                        </div>
+                        <p class="metric-desc text-danger" id="recall-warning-text">
+                            <i data-lucide="info" class="inline-icon"></i>
+                            Detection Gap: 29 dangerous transactions missed (4.83%). Switch to Smart AI Engine to catch remaining threats.
+                        </p>
+                    </div>
+
+                    <!-- Safe Pass Rate Card -->
+                    <div class="bento-card">
+                        <div class="card-header-simple">
+                            <span class="metric-label">Safe Payment Pass Rate</span>
+                            <span class="badge-status success" id="val-safe-pass-badge">98.33%</span>
+                        </div>
+                        <div class="metric-large-text" id="metric-safe-pass">98.33%</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-fill success" id="fill-safe-pass" style="width: 98.33%;"></div>
+                        </div>
+                        <p class="metric-desc text-success" id="safe-pass-desc">
+                            <i data-lucide="check-circle" class="inline-icon"></i>
+                            1,180 of 1,200 safe payments approved automatically (1.67% step-up friction rate).
+                        </p>
+                    </div>
+
+                    <!-- Borderline Routing Card -->
+                    <div class="bento-card">
+                        <div class="card-header-simple">
+                            <span class="metric-label">Borderline Case Handling</span>
+                            <span class="badge-status info" id="val-borderline-badge">98.00%</span>
+                        </div>
+                        <div class="metric-large-text" id="metric-borderline">98.00%</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-fill info" id="fill-borderline" style="width: 98.00%;"></div>
+                        </div>
+                        <p class="metric-desc" id="borderline-desc">196 of 200 borderline payments safely routed for user verification.</p>
+                    </div>
+
+                    <!-- Chart Card: Detection Breakdown -->
+                    <div class="bento-card card-double">
+                        <div class="card-title-bar">
+                            <h3>Payment Risk Breakdown</h3>
+                            <i data-lucide="pie-chart" class="info-icon"></i>
+                        </div>
+                        <div class="chart-container custom-graph-wrapper" id="wrapper-chartComposition">
+                            <div class="svg-doughnut-layout">
+                                <div class="doughnut-chart-svg-container">
+                                    <svg viewBox="0 0 42 42" class="doughnut-svg">
+                                        <!-- Safe Payments circle segment (70%) -->
+                                        <circle cx="21" cy="21" r="15.91549430918954" fill="transparent"
+                                            stroke="#10b981" stroke-width="4.5" stroke-dasharray="70 30"
+                                            stroke-dashoffset="25"></circle>
+                                        <!-- Policy Violations (18.55%) -->
+                                        <circle cx="21" cy="21" r="15.91549430918954" fill="transparent"
+                                            stroke="#ff2a85" stroke-width="4.5" stroke-dasharray="18.55 81.45"
+                                            stroke-dashoffset="-45"></circle>
+                                        <!-- Prompt Attacks (10%) -->
+                                        <circle cx="21" cy="21" r="15.91549430918954" fill="transparent"
+                                            stroke="#ffb703" stroke-width="4.5" stroke-dasharray="10 90"
+                                            stroke-dashoffset="-63.55"></circle>
+                                        <!-- Borderline Cases (1.45%) -->
+                                        <circle cx="21" cy="21" r="15.91549430918954" fill="transparent"
+                                            stroke="#ff758c" stroke-width="4.5" stroke-dasharray="1.45 98.55"
+                                            stroke-dashoffset="-73.55"></circle>
+                                    </svg>
+                                    <div class="doughnut-center-stat">
+                                        <span class="center-stat-val">2,000</span>
+                                        <span class="center-stat-lbl">Txns</span>
+                                    </div>
+                                </div>
+                                <div class="graph-legend-grid">
+                                    <div class="legend-item"><span class="legend-dot"
+                                            style="background:#10b981;"></span> Safe Payments <strong
+                                            id="val-leg-safe">70.0%</strong></div>
+                                    <div class="legend-item"><span class="legend-dot"
+                                            style="background:#ff2a85;"></span> Policy Violations <strong
+                                            id="val-leg-viol">18.6%</strong></div>
+                                    <div class="legend-item"><span class="legend-dot"
+                                            style="background:#ffb703;"></span> Prompt Attacks <strong
+                                            id="val-leg-inj">10.0%</strong></div>
+                                    <div class="legend-item"><span class="legend-dot"
+                                            style="background:#ff758c;"></span> Borderline Cases <strong
+                                            id="val-leg-amb">1.5%</strong></div>
+                                </div>
+                            </div>
+                            <canvas id="chartComposition" style="display:none;"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart Card: Metric Comparison -->
+                    <div class="bento-card card-double">
+                        <div class="card-title-bar">
+                            <h3>Security Performance Overview</h3>
+                            <i data-lucide="bar-chart-2" class="info-icon"></i>
+                        </div>
+                        <div class="chart-container custom-graph-wrapper" id="wrapper-chartPerformance">
+                            <div class="custom-bar-graph">
+                                <!-- Bar 1: Safe Pass Rate -->
+                                <div class="bar-col">
+                                    <div class="bar-val-tag">100%</div>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" style="height: 100%; background: #10b981;"></div>
+                                    </div>
+                                    <span class="bar-lbl">Safe Pass Rate</span>
+                                </div>
+                                <!-- Bar 2: Threat Block Rate -->
+                                <div class="bar-col">
+                                    <div class="bar-val-tag" id="bar-val-threat">95.17%</div>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" id="bar-fill-threat"
+                                            style="height: 95.17%; background: linear-gradient(180deg, #ff2a85, #ff4b91);">
+                                        </div>
+                                    </div>
+                                    <span class="bar-lbl">Threat Block Rate</span>
+                                </div>
+                                <!-- Bar 3: False Block Rate -->
+                                <div class="bar-col">
+                                    <div class="bar-val-tag">0.00%</div>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" style="height: 2%; background: rgba(255, 51, 102, 0.4);">
+                                        </div>
+                                    </div>
+                                    <span class="bar-lbl">False Block Rate</span>
+                                </div>
+                                <!-- Bar 4: Borderline Handled -->
+                                <div class="bar-col">
+                                    <div class="bar-val-tag">100%</div>
+                                    <div class="bar-track">
+                                        <div class="bar-fill"
+                                            style="height: 100%; background: linear-gradient(180deg, #ffb703, #ffd166);">
+                                        </div>
+                                    </div>
+                                    <span class="bar-lbl">Borderline Handled</span>
+                                </div>
+                            </div>
+                            <canvas id="chartPerformance" style="display:none;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detection Gap Deep-Dive Box -->
+                <div class="apf-deep-dive-card mt-4">
+                    <div class="deep-dive-header">
+                        <div class="flex-align-center">
+                            <i data-lucide="alert-triangle" class="warning-icon"></i>
+                            <div>
+                                <h4>Security Gap Analysis: Why Standard Rules Miss Threats</h4>
+                                <p class="text-secondary text-sm">Understanding why standard rule-based filters missed
+                                    29 hidden attack scenarios.</p>
+                            </div>
+                        </div>
+                        <button id="deepdive-fix-btn" class="btn btn-primary btn-sm">Upgrade to Smart AI Engine</button>
+                    </div>
+                    <div class="deep-dive-content-grid">
+                        <div class="dd-pane">
+                            <span class="badge-status dd-badge violation-bg">Disguised Item Purchases</span>
+                            <h5>Evasion via Approved Store Categories</h5>
+                            <p>An agent is authorized to buy "office supplies" from general stores. The attacker has the
+                                agent buy an <strong>Amazon Gift Card</strong> instead. Since the merchant is "Amazon"
+                                (allowed), standard rule filters miss it. Smart AI checks the actual item description to
+                                block the transaction.</p>
+                        </div>
+                        <div class="dd-pane">
+                            <span class="badge-status dd-badge injection-bg">Hidden AI Attacks</span>
+                            <h5>Context & Prompt Hijacking</h5>
+                            <p>Attacking scripts bypass simple keyword filters by using indirect phrasing. AI text
+                                matching compares the original request against the actual checkout details to detect
+                                context manipulation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB CONTENT: PLAYGROUND & SIMULATOR -->
+            <section id="tab-playground" class="tab-pane">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Transaction Simulator & Sandbox</h1>
+                        <p class="page-subtitle">Submit real-time proposed transactions, configure agent contexts, and
+                            run the firewall decision cycle.</p>
+                    </div>
+                </div>
+
+                <div class="simulator-layout">
+                    <!-- Left Column: Input Form -->
+                    <div class="simulator-card input-card">
+                        <div class="card-heading">
+                            <h3>Proposed Agent Transaction Details</h3>
+                            <div class="presets-dropdown">
+                                <label for="preset-selector">Load Preset:</label>
+                                <select id="preset-selector">
+                                    <option value="" disabled selected>-- Choose scenario --</option>
+                                    <option value="safe">Safe Item: Whiteboard Markers (₹1,420) - Office Supplies Grant
+                                    </option>
+                                    <option value="violation-amazon">Evasion Violation: Amazon Gift Card (₹1,810) -
+                                        Office Supplies Grant</option>
+                                    <option value="injection-system">Direct Prompt Injection: SYSTEM OVERRIDE (₹4,924) -
+                                        Travel booking</option>
+                                    <option value="injection-stealth">Stealth Prompt Injection: Budget Limit Ignore
+                                        (₹1,945)</option>
+                                    <option value="ambiguous-gift">Ambiguous: Corporate Calendar for Client (₹1,656)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <form id="simulator-form" class="sim-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sim-grant">Select Active Grant Mandate</label>
+                                    <select id="sim-grant" required>
+                                        <!-- Active mandates populated dynamically -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sim-amount">Proposed Amount (INR)</label>
+                                    <div class="input-currency-wrapper">
+                                        <span class="currency-symbol">₹</span>
+                                        <input type="number" id="sim-amount" value="1810.00" step="0.01" min="0.01"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sim-item">Item Description</label>
+                                <input type="text" id="sim-item" value="Amazon gift card ₹4,900"
+                                    placeholder="e.g. A4 paper ream, biryani for 8, cab ride" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sim-merchant">Merchant Name</label>
+                                    <input type="text" id="sim-merchant" value="Amazon" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sim-category">Merchant Category Code</label>
+                                    <input type="text" id="sim-category" value="general_retail"
+                                        placeholder="e.g. stationery, food_delivery, saas, gift_cards" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sim-context">Agent Context Snapshot (Webpage / Prompt Logs)</label>
+                                <textarea id="sim-context" rows="3"
+                                    placeholder="Paste logs or webpage content the agent read prior to purchase..."></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sim-seq">Session Sequence Position</label>
+                                    <input type="number" id="sim-seq" value="2" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sim-freq">Transactions in Last Hour</label>
+                                    <input type="number" id="sim-freq" value="3" min="0" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block" id="btn-run-sim">
+                                <span class="btn-text">Evaluate Transaction</span>
+                                <i data-lucide="arrow-right"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right Column: Outputs and Visual Evaluation Flow -->
+                    <div class="simulator-card output-card">
+                        <div class="eval-flow-bg" id="eval-flow-visualizer">
+                            <div class="empty-state-eval">
+                                <i data-lucide="shield-check" class="empty-icon shadow-pulse"></i>
+                                <h4>Firewall Decision Pipeline</h4>
+                                <p>Submit a transaction or load a template preset on the left to visualize the live
+                                    firewall scoring and decision rules.</p>
+                            </div>
+
+                            <!-- Animated evaluating screen -->
+                            <div class="eval-loading hidden" id="eval-loading">
+                                <div class="spinner-circle"></div>
+                                <p class="loading-phase">Executing Pre-Flight Gateway Checks...</p>
+                            </div>
+
+                            <!-- Pipeline Results -->
+                            <div class="eval-results hidden" id="eval-results">
+                                <!-- Top Decision Header -->
+                                <div class="decision-header-card" id="dec-card">
+                                    <div class="card-indicator" id="dec-indicator"></div>
+                                    <div class="header-main-row">
+                                        <div>
+                                            <span class="decision-label">Firewall Security Action</span>
+                                            <div class="decision-action" id="dec-action">BLOCK</div>
+                                        </div>
+                                        <div class="risk-score-badge">
+                                            <span class="rs-label">Risk Index</span>
+                                            <span class="rs-value" id="dec-risk-score">0.59</span>
+                                        </div>
+                                    </div>
+                                    <p class="decision-reason" id="dec-reason">The proposed item does not align with the
+                                        authorized purpose.</p>
+                                </div>
+
+                                <!-- Pipeline Node Pipeline Signals -->
+                                <div class="pipeline-flow">
+                                    <h4 class="pipeline-section-title">Security Check Breakdown</h4>
+
+                                    <!-- Node 1 -->
+                                    <div class="pipeline-node" id="node-policy">
+                                        <div class="node-status-icon"><i data-lucide="check"></i></div>
+                                        <div class="node-info">
+                                            <span class="node-name">1. Policy & Limit Rules</span>
+                                            <span class="node-status-desc">Active status checks. Limit checks.</span>
+                                        </div>
+                                        <div class="node-score" id="val-node-policy">PASS</div>
+                                    </div>
+
+                                    <!-- Node 2 -->
+                                    <div class="pipeline-node" id="node-semantic">
+                                        <div class="node-status-icon"><i data-lucide="check"></i></div>
+                                        <div class="node-info">
+                                            <span class="node-name">2. Purpose & Item Matching</span>
+                                            <span class="node-status-desc" id="desc-node-semantic">Heuristic Category
+                                                Match</span>
+                                        </div>
+                                        <div class="node-score" id="val-node-semantic">0.00</div>
+                                    </div>
+
+                                    <!-- Node 3 -->
+                                    <div class="pipeline-node" id="node-injection">
+                                        <div class="node-status-icon"><i data-lucide="check"></i></div>
+                                        <div class="node-info">
+                                            <span class="node-name">3. AI Prompt Attack Scanner</span>
+                                            <span class="node-status-desc" id="desc-node-injection">Lexical Keyword
+                                                Search</span>
+                                        </div>
+                                        <div class="node-score" id="val-node-injection">0.00</div>
+                                    </div>
+
+                                    <!-- Node 4 -->
+                                    <div class="pipeline-node" id="node-anomaly">
+                                        <div class="node-status-icon"><i data-lucide="check"></i></div>
+                                        <div class="node-info">
+                                            <span class="node-name">4. Unusual Activity Check</span>
+                                            <span class="node-status-desc" id="desc-node-anomaly">Velocity ratio &
+                                                proximity limits</span>
+                                        </div>
+                                        <div class="node-score" id="val-node-anomaly">0.00</div>
+                                    </div>
+                                </div>
+
+                                <!-- Human step-up challenge panel -->
+                                <div class="stepup-panel hidden" id="challenge-phone-frame">
+                                    <div class="phone-frame-header">
+                                        <span class="mac-dot crimson"></span>
+                                        <span class="mac-dot amber"></span>
+                                        <span class="mac-dot emerald"></span>
+                                        <span class="phone-title">User Approval Request</span>
+                                    </div>
+                                    <div class="phone-app-content">
+                                        <div class="challenge-title-group">
+                                            <i data-lucide="smartphone" class="push-icon animate-bounce"></i>
+                                            <h5>Required Consent</h5>
+                                            <p>The AI agent requested a payment that requires your explicit approval.
+                                            </p>
+                                        </div>
+                                        <div class="side-comparison-box">
+                                            <div class="comparison-row source">
+                                                <div class="comp-col-title">Authorized Purpose</div>
+                                                <div class="comp-val text-primary" id="phone-auth-purpose">office
+                                                    supplies</div>
+                                            </div>
+                                            <div class="comparison-separator"><i data-lucide="arrow-down"></i></div>
+                                            <div class="comparison-row target">
+                                                <div class="comp-col-title">Proposed Purchase</div>
+                                                <div class="comp-val" id="phone-proposed-item">Amazon gift card ₹4,900
+                                                </div>
+                                                <div class="comp-meta">
+                                                    <span id="phone-proposed-amount"><strong
+                                                            class="highlight">₹1,809.85</strong></span>
+                                                    <span id="phone-proposed-merchant">Amazon</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="phone-btn-group">
+                                            <button class="phone-btn reject" onclick="resolveChallenge(false)">Deny
+                                                Action</button>
+                                            <button class="phone-btn accept" onclick="resolveChallenge(true)">Allow
+                                                Transaction</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB CONTENT: AUTHORIZATION GRANTS -->
+            <section id="tab-grants" class="tab-pane">
+                <div class="page-header justify-space-between">
+                    <div>
+                        <h1 class="page-title">Active Authorization Grants</h1>
+                        <p class="page-subtitle">Configure limits, merchants allowed, spend categories, and semantic
+                            rules for autonomous AI agents.</p>
+                    </div>
+                    <button class="btn btn-primary" id="btn-new-grant-trigger">
+                        <i data-lucide="plus-circle"></i>
+                        <span>Create Spending Mandate</span>
+                    </button>
+                </div>
+
+                <!-- Grants Table -->
+                <div class="table-container">
+                    <table class="apf-data-table" id="grants-list-table">
+                        <thead>
+                            <tr>
+                                <th>Grant ID</th>
+                                <th>Purpose Description</th>
+                                <th>Spend Limit</th>
+                                <th>Allowed Categories</th>
+                                <th>Blocklist</th>
+                                <th>Recurrence</th>
+                                <th>Validity Period</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="grants-table-body">
+                            <!-- Grants populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal dialog: New Grant Form -->
+                <div class="modal hidden" id="modal-new-grant">
+                    <div class="modal-dialog-overlay" onclick="closeGrantModal()"></div>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Create Spending Grant Mandate</h3>
+                            <button class="btn-close-modal" onclick="closeGrantModal()">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="new-grant-form">
+                                <div class="form-group">
+                                    <label for="grant-purpose">Authorized Purpose Description (Semantic
+                                        Baseline)</label>
+                                    <input type="text" id="grant-purpose"
+                                        placeholder="e.g. office supplies, team lunch, local cab bookings" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="grant-limit">Spend Limit (₹ INR)</label>
+                                        <input type="number" id="grant-limit" value="5000" min="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="grant-recurrence">Mandate Recurrence Model</label>
+                                        <select id="grant-recurrence">
+                                            <option value="single_use">Single Use Only</option>
+                                            <option value="per_transaction">Per Transaction limit</option>
+                                            <option value="daily_cap">Daily Accumulative Cap</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="grant-categories">Allowed Category Codes (Comma separated list)</label>
+                                    <input type="text" id="grant-categories"
+                                        value="stationery, office_supplies, general_retail">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="grant-blocklist">Blocked Items/Merchant Categories (Comma separated
+                                        list)</label>
+                                    <input type="text" id="grant-blocklist" value="gift_cards, gaming, crypto">
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="grant-valid-from">Valid From</label>
+                                        <input type="datetime-local" id="grant-valid-from" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="grant-valid-until">Valid Until</label>
+                                        <input type="datetime-local" id="grant-valid-until" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <span>Register Spending Mandate</span>
+                                    <i data-lucide="shield-check"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB CONTENT: DATASET EXPLORER -->
+            <section id="tab-dataset" class="tab-pane">
+                <div class="page-header justify-space-between">
+                    <div>
+                        <h1 class="page-title">Transaction Logs Explorer</h1>
+                        <p class="page-subtitle">Search, filter, and inspect all 2,000 test transactions evaluated by
+                            the firewall.</p>
+                    </div>
+                    <div class="dataset-stats">
+                        <span class="stat-badge"><strong id="total-count-explorer">2000</strong> Transactions</span>
+                        <span class="stat-badge violation-bg"><strong id="violation-count-explorer">400</strong>
+                            Violations</span>
+                        <span class="stat-badge injection-bg"><strong id="injection-count-explorer">200</strong>
+                            Attacks</span>
+                    </div>
+                </div>
+
+                <!-- Filters panel -->
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label for="filter-label">Payment Category:</label>
+                        <select id="filter-label">
+                            <option value="ALL">All Transactions</option>
+                            <option value="SAFE">Safe Payments</option>
+                            <option value="VIOLATION">Policy Violations</option>
+                            <option value="INJECTION">Prompt Attacks</option>
+                            <option value="AMBIGUOUS">Borderline Cases</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-action">Firewall Action:</label>
+                        <select id="filter-action">
+                            <option value="ALL">All Outcomes</option>
+                            <option value="APPROVE">APPROVED</option>
+                            <option value="CHALLENGE">VERIFICATION SENT</option>
+                            <option value="BLOCK">BLOCKED</option>
+                            <option value="MISSED_FN">MISSED THREATS</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group flex-grow">
+                        <label for="table-search">Search Text:</label>
+                        <input type="text" id="table-search"
+                            placeholder="Search ID, item description, purposes or merchants...">
+                    </div>
+                </div>
+
+                <!-- Dataset Table -->
+                <div class="table-container">
+                    <table class="apf-data-table" id="dataset-master-table">
+                        <thead>
+                            <tr>
+                                <th>Txn ID</th>
+                                <th>Authorized Purpose</th>
+                                <th>Category</th>
+                                <th>Item Description</th>
+                                <th>Amount</th>
+                                <th>Merchant</th>
+                                <th>Actual Type</th>
+                                <th>Expected Action</th>
+                                <th>Risk Score</th>
+                                <th>Firewall Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataset-rows-container">
+                            <tr>
+                                <td colspan="10" class="text-center">Loading transactions dataset...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer Pagination -->
+                <div class="pagination-footer">
+                    <div class="pagination-details" id="pagination-details">
+                        Showing 1 to 50 of 2,000 items
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pag-btn" id="pag-btn-prev" disabled><i data-lucide="chevron-left"></i></button>
+                        <div class="pag-pages" id="pag-pages-container">
+                            <!-- Page numbers -->
+                        </div>
+                        <button class="pag-btn" id="pag-btn-next"><i data-lucide="chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB CONTENT: ARCHITECTURE -->
+            <section id="tab-architecture" class="tab-pane">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Agentic Payment Firewall - System Flow</h1>
+                        <p class="page-subtitle">Technical routing paths, APIs, hook triggers, and consent escalation
+                            loops in Razorpay.</p>
+                    </div>
+                </div>
+
+                <div class="architecture-layout">
+                    <!-- Flow diagram container cards -->
+                    <div class="arch-flow-diagram">
+                        <h3>Evaluation Pipeline Routing Flow</h3>
+
+                        <div class="routing-visual-grid">
+                            <!-- Step 1 -->
+                            <div class="routing-step">
+                                <div class="step-num">01</div>
+                                <h4>Checkout Pre-Flight Gate</h4>
+                                <p>Instead of routing checkout directly to payment servers, the AI agent passes details
+                                    (`ProposedTransaction`) to the APF API endpoint `/v1/transactions/evaluate`.</p>
+                            </div>
+
+                            <div class="routing-arrow"><i data-lucide="arrow-right"></i></div>
+
+                            <!-- Step 2 -->
+                            <div class="routing-step">
+                                <div class="step-num">02</div>
+                                <h4>Ensemble Evaluation</h4>
+                                <p>The transaction details flow simultaneously to the Policy Filter, the Intent
+                                    Word/Embedding Sim Matcher, Context Injection Guard, and session sequence counters.
+                                </p>
+                            </div>
+
+                            <div class="routing-arrow"><i data-lucide="arrow-right"></i></div>
+
+                            <!-- Step 3 -->
+                            <div class="routing-step">
+                                <div class="step-num">03</div>
+                                <h4>Risk Aggregator Scoring</h4>
+                                <p>A single index value (0.0 to 1.0) is formed by combining evaluation signals. Decision
+                                    limits direct action: <strong>APPROVE / CHALLENGE / BLOCK</strong>.</p>
+                            </div>
+                        </div>
+
+                        <!-- Split outputs -->
+                        <div class="outputs-visual-split mt-4">
+                            <div class="split-output border-success">
+                                <div class="badge-status success">ON APPROVE</div>
+                                <h5>Direct Razorpay Execution</h5>
+                                <p>Transaction risk score &lt; 0.30. Core server constructs UPI Reserve Pay order ID.
+                                    Mandate limit decremented. Quick 80ms completion.</p>
+                            </div>
+
+                            <div class="split-output border-warning">
+                                <div class="badge-status info">ON CHALLENGE</div>
+                                <h5>Stepped Consent Escalation</h5>
+                                <p>Borderline metrics (0.30 to 0.70) trigger push-notification. Mobile overlay
+                                    highlights authorized mandate text alongside checkout values side-by-side. Approve
+                                    releases transaction; decline aborts.</p>
+                            </div>
+
+                            <div class="split-output border-danger">
+                                <div class="badge-status danger">ON BLOCK</div>
+                                <h5>Evasive Action Rejected</h5>
+                                <p>Risk score &ge; 0.70. Core transaction ends with error. Context trace logged to
+                                    retrain embedding models. Agent is given details to inform user.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Integration specifics -->
+                    <div class="arch-details-card">
+                        <h3>Razorpay Integration points</h3>
+                        <ul class="arch-list">
+                            <li>
+                                <strong>UPI Reserve Pay Hook</strong>: Syncs client grants directly with the Reserve Pay
+                                authorization schemas. Ensures limit configurations match double-entry balances.
+                            </li>
+                            <li>
+                                <strong>Auditable Logs & Retraining Loop</strong>: Every transaction decision logs
+                                embeddings and logs. Overrides and disputes automatically mark files for scheduled
+                                nightly system weight updates.
+                            </li>
+                            <li>
+                                <strong>Context Diffs</strong>: Uses LLM-as-a-judge or Sentence Transformers to
+                                comparison-scan the starting instruction against final action descriptions, blocking
+                                prompt hijacking.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- Main Script -->
+    <script src="dataset_data.js"></script>
+    <script src="app.js?v=1.0.3"></script>
+</body>
+
+</html>

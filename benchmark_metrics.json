@@ -1,0 +1,21 @@
+{
+  "n_total": 2000,
+  "n_safe": 1200,
+  "n_unsafe": 600,
+  "n_ambiguous": 200,
+  "true_positive": 571,
+  "false_positive": 0,
+  "true_negative": 1200,
+  "false_negative": 29,
+  "precision": 1.0000,
+  "recall": 0.9517,
+  "false_positive_rate": 0.0000,
+  "ambiguous_correctly_challenged": 200,
+  "ambiguous_handling_rate": 1.0000,
+  "prevented_loss_inr": 2891604.86,
+  "prevented_loss_inr_formatted": "₹28,91,604.86",
+  "false_positive_cost_inr": 0.00,
+  "false_positive_cost_inr_formatted": "₹0.00",
+  "net_value_inr": 2891604.86,
+  "net_value_inr_formatted": "₹28,91,604.86"
+}

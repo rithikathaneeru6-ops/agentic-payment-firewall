@@ -1,0 +1,14 @@
+# OS & Editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Vercel & build artifacts
+.vercel/
+target/
+out/
+*.class
+
+# Node / Dependencies
+node_modules/
