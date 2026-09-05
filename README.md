@@ -20,21 +20,17 @@ The **Agentic Payment Firewall** serves as an inline security layer between AI p
 
 ## 🛠️ How to Run Locally
 
-Since this is a fully static client-side web application, no backend server or node installation is required!
+Since this is a fully static client-side web application, no installation or backend server is required!
 
-### Option 1: Direct Browser Open
-Simply double-click or open `index.html` in any modern browser (Chrome, Firefox, Edge, Safari).
+### Option 1: Direct Browser Open (Recommended)
+Simply double-click or open `index.html` in any modern web browser (Chrome, Firefox, Edge, Safari).
 
 ### Option 2: Local Static Server (Optional)
-If you prefer running via a local server:
+If you prefer testing via a local HTTP server (such as Node `serve` or Live Server extension):
 ```bash
-# Using Python 3
-python -m http.server 8000
-
-# Or using npx serve
 npx serve .
 ```
-Then visit `http://localhost:8000` in your web browser.
+Then open `http://localhost:3000` in your web browser.
 
 ---
 
