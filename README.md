@@ -4,7 +4,7 @@ A prototype dashboard for monitoring, evaluating, and securing autonomous AI spe
 
 ## 🚀 Live Demo
 
-- **GitHub Pages**: [https://\<your-username\>.github.io/agentic-payment-firewall/](https://\<your-username\>.github.io/agentic-payment-firewall/)
+- **GitHub Pages**: [https://rithikathaneeru6-ops.github.io/agentic-payment-firewall/](https://rithikathaneeru6-ops.github.io/agentic-payment-firewall/)
 
 ---
 
